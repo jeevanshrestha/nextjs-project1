@@ -47,7 +47,7 @@ export default function Gallery() {
 
         const { data } = await response.json();
         setImages(data?.mediaItems?.edges || []);
-      } catch (err : any) {
+      } catch (err : any ) {
         setError(err.message  );
       } finally {
         setIsLoading(false);
