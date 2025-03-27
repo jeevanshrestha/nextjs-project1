@@ -2,8 +2,15 @@
 import { useState, useEffect } from "react";
 
 export default function Gallery() {
-  const [images, setImages] = useState([]);
-  const [selectedImageIndex, setSelectedImageIndex] = useState(null);
+  interface ImageNode {
+    id: string;
+    title: string;
+    slug: string;
+    sourceUrl: string;
+  }
+
+  const [images, setImages] = useState<{ node: ImageNode }[]>([]);
+  const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -40,8 +47,8 @@ export default function Gallery() {
 
         const { data } = await response.json();
         setImages(data?.mediaItems?.edges || []);
-      } catch (err) {
-        setError(err.message);
+      } catch (err : any) {
+        setError(err.message  );
       } finally {
         setIsLoading(false);
       }
@@ -50,7 +57,7 @@ export default function Gallery() {
     fetchImages();
   }, []);
 
-  const openModal = (index) => {
+  const openModal = (index : any) => {
     setSelectedImageIndex(index);
     document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
   };
@@ -60,15 +67,15 @@ export default function Gallery() {
     document.body.style.overflow = 'auto'; // Re-enable scrolling
   };
 
-  const goToNextImage = (e) => {
+  const goToNextImage = (e : any) => {
     e.stopPropagation();
-    setSelectedImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+    setSelectedImageIndex((prevIndex) => (prevIndex !== null ? (prevIndex + 1) % images.length : 0));
   };
 
-  const goToPreviousImage = (e) => {
+  const goToPreviousImage = (e : any) => {
     e.stopPropagation();
     setSelectedImageIndex(
-      (prevIndex) => (prevIndex - 1 + images.length) % images.length
+      (prevIndex) => (prevIndex !== null ? (prevIndex - 1 + images.length) % images.length : images.length - 1)
     );
   };
 
