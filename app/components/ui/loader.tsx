@@ -1,6 +1,6 @@
 "use client"
 
-import { motion } from "motion/react"
+import { motion } from "framer-motion";
 
 function LoadingCircleSpinner() {
     return (
@@ -41,6 +41,7 @@ function StyleSheet() {
                 border: 4px solid var(--divider);
                 border-top-color: #ff0088;
                 will-change: transform;
+                z-index:1000;
             }
             `}
         </style>

@@ -8,51 +8,14 @@ interface ImageNode {
   sourceUrl: string;
 }
 
-export default function Gallery() {
+export default function LeCavist2025() {
   const [images, setImages] = useState<{ node: ImageNode }[]>([]);
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    async function fetchImages() {
-      try {
-        setIsLoading(true);
-        const response = await fetch("https://wpserve.harveynormancommercial.com.au/graphql", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            query: `
-              {
-                mediaItems(where: { search: "LeCavist" }) {
-                  edges {
-                    node {
-                      id
-                      title
-                      slug
-                      sourceUrl
-                    }
-                  }
-                }
-              }
-            `,
-          }),
-        });
 
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-
-        const { data } = await response.json();
-        setImages(data?.mediaItems?.edges || []);
-      } catch (err: any) {
-        setError(err.message);
-      } finally {
-        setIsLoading(false);
-      }
-    }
 
     fetchImages();
   }, []);
@@ -97,7 +60,7 @@ export default function Gallery() {
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-100">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-black-400"></div>
       </div>
     );
   }
@@ -148,11 +111,7 @@ export default function Gallery() {
                     loading="lazy"
                   />
                 </div>
-                {node.title && (
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-                    <p className="text-white font-medium truncate">{node.title}</p>
-                  </div>
-                )}
+
               </div>
             ))}
           </div>
@@ -203,11 +162,7 @@ export default function Gallery() {
               </div>
 
               <div className="mt-4 text-center text-white">
-                {images[selectedImageIndex].node.title && (
-                  <p className="text-lg font-medium mb-2">
-                    {images[selectedImageIndex].node.title}
-                  </p>
-                )}
+
                 <p className="text-sm text-gray-300">
                   {selectedImageIndex + 1} of {images.length}
                 </p>
