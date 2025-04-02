@@ -15,9 +15,7 @@ export default async function Home() {
   try {
     const data = await getStaticProps();
     // Check if data contains posts array in the expected structure
-    const posts: Post[] = Array.isArray(data?.posts) ? data.posts : 
-                         Array.isArray(data?.props?.posts) ? data.props.posts : 
-                         [];
+    const posts: Post[] = Array.isArray(data?.props?.posts) ? data.props.posts : [];
     
     return (
       <div className="container">
