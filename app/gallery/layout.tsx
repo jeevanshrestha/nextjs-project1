@@ -5,13 +5,13 @@ const Layout: React.FC = ({ children }: React.PropsWithChildren<{}>) => {
     return (
         <div className={styles.container}>
             <header className={styles.header}>
-                <h1>HNC Gallery</h1>
+                <h1>Harvey Norman Commercial Division</h1>
             </header>
             <main className={styles.main}>
                 {children}
             </main>
             <footer className={styles.footer}>
-                <p>&copy; 2023 Gallery</p>
+                <p>&copy; {new Date().getFullYear()} Harvey Norman Commervcial Division.</p>
             </footer>
         </div>
     );

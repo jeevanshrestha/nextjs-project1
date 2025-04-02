@@ -1,6 +1,7 @@
+
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
 import React from "react"; // Add the missing import statement for React
 import Template from "./template";
  
@@ -16,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body   >
+      <body >
       <Template>
             {children}
       </Template>

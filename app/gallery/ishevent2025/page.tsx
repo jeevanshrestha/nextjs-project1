@@ -10,7 +10,6 @@ interface ImageNode {
   sourceUrl: string;
 }
 
-
 const GET_IMAGES_BY_SEARCH = gql`
   query GetImagesBySearch($searchTerm: String!) {
     mediaItems(where: { search: $searchTerm } , , first: 100) {
@@ -26,14 +25,14 @@ const GET_IMAGES_BY_SEARCH = gql`
   }
 `;
 
-export default function LeCavist2025() {
+export default function IshEvent2025() {
   const [images, setImages] = useState<{ node: ImageNode }[]>([]);
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    async function fetchImages() {
+    async function fetchImages(searchTerm: string) {  // Removed the destructuring
       const client = getClient();
       try {
         setIsLoading(true);
@@ -41,13 +40,13 @@ export default function LeCavist2025() {
         
         const { data, error } = await client.query({
           query: GET_IMAGES_BY_SEARCH,
-          variables: { searchTerm: "LeCavist" }
+          variables: { searchTerm }  // Using the parameter directly
         });
-
+  
         if (error) {
           throw new Error(error.message);
         }
-
+  
         setImages(data?.mediaItems?.edges || []);
       } catch (err: any) {
         setError(err.message || "Failed to load images");
@@ -56,9 +55,8 @@ export default function LeCavist2025() {
       }
     }
     
-    fetchImages();
+    fetchImages("ish_germany");  // Passing the string directly
   }, []);
-
   const openModal = (index: number) => {
     setSelectedImageIndex(index);
     document.body.style.overflow = 'hidden';
@@ -125,7 +123,7 @@ export default function LeCavist2025() {
     <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">LeCavist 2025</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">ISH Event 2025</h1>
         </div>
 
         {images.length === 0 ? (
